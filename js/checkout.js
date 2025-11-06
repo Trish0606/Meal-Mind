@@ -1,30 +1,30 @@
-// 1️⃣ Initialize Stripe with your actual publishable key
-const stripe = Stripe(pk_test_51SQJhTIo2XN3JEm9ASC0GAgQOdP46epjzhVLN5RIUp2PXkFmTQxtXvJVhAgtVFGUlRcSwnd4gKEZzWKAqW2CNuFT00lkAR6XaL); // <-- REPLACE with your key
+// Initialize Stripe with your publishable key
+const stripe = Stripe("pk_test_51SQJhTIo2XN3JEm9ASC0GAgQOdP46epjzhVLN5RIUp2PXkFmTQxtXvJVhAgtVFGUlRcSwnd4gKEZzWKAqW2CNuFT00lkAR6XaL"); // <-- REPLACE with your actual key
 
-// 2️⃣ Grab the checkout button from the page
+// Get the checkout button by its ID
 const checkoutButton = document.getElementById("checkout-button");
 
-// 3️⃣ Add click event to trigger checkout
-checkoutButton.addEventListener("click", async () => {
-  try {
-    // Call your backend to create a checkout session
-    const response = await fetch("/api/create-checkout-session.js", {
-      method: "POST",
+// Add click event listener
+checkoutButton.addEventListener("click", function () {
+  // Call backend API to create checkout session
+  fetch("/api/create-checkout-session.js", {
+    method: "POST",
+  })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (session) {
+      // Redirect to Stripe Checkout
+      return stripe.redirectToCheckout({ sessionId: session.id });
+    })
+    .then(function (result) {
+      if (result.error) {
+        // Display any error from Stripe
+        alert(result.error.message);
+      }
+    })
+    .catch(function (error) {
+      console.error("Error:", error);
+      alert("Checkout failed. Please try again.");
     });
-
-    const session = await response.json();
-
-    // Redirect to Stripe Checkout
-    const result = await stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
-
-    if (result.error) {
-      // Show any error to the user
-      alert(result.error.message);
-    }
-  } catch (error) {
-    console.error("Error:", error);
-    alert("Checkout failed. Please try again.");
-  }
 });
