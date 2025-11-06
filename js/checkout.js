@@ -1,13 +1,13 @@
-// Initialize Stripe with your publishable key (quotes are required)
-const stripe = Stripe("pk_test_51SQJhTIo2XN3JEm9ASC0GAgQOdP46epjzhVLN5RIUp2PXkFmTQxtXvJVhAgtVFGUlRcSwnd4gKEZzWKAqW2CNuFT00lkAR6XaL");
+// Initialize Stripe with your publishable key
+const stripe = Stripe("pk_test_51SQJhTIo2XN3JEm9ASC0GAgQOdP46epjzhVLN5RIUp2PXkFmTQxtXvJVhAgtVFGUlRcSwnd4gKEZzWKAqW2CNuFT00lkAR6XaL"); // <-- keep quotes!
 
-// Grab the checkout button by its ID
+// Grab the checkout button
 const checkoutButton = document.getElementById("checkout-button");
 
 // Add click event listener
 checkoutButton.addEventListener("click", function () {
-  // Call backend API to create a checkout session
-  fetch("/api/create-checkout-session.js", {
+  // Corrected: remove the .js from the API path
+  fetch("/api/create-checkout-session", {
     method: "POST",
   })
     .then(function (response) {
@@ -18,8 +18,7 @@ checkoutButton.addEventListener("click", function () {
       return stripe.redirectToCheckout({ sessionId: session.id });
     })
     .then(function (result) {
-      if (result.error) {
-        // Display any error from Stripe
+           if (result.error) {
         alert(result.error.message);
       }
     })
@@ -28,4 +27,5 @@ checkoutButton.addEventListener("click", function () {
       alert("Checkout failed. Please try again.");
     });
 });
+
 
