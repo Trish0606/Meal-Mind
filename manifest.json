@@ -1,0 +1,11 @@
+{
+  "name": "MealMind",
+  "short_name": "MealMind",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#4CAF50",
+  "theme_color": "#4CAF50",
+  "icons": [
+    {"src": "images/logo.png","sizes": "192x192","type": "image/png"}
+  ]
+}

@@ -1,0 +1,1 @@
+const siteConfig = { siteTitle: 'MealMind', logoPath: 'images/logo.png', heroImagePath: 'images/hero.jpg', primaryColor: '#4CAF50', secondaryColor: '#ffffff', subscribeButtonText: 'Subscribe Now' };
